@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Salary Predictor</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="background-animation"></div>
+
+<div class="main-container">
+
+    <div class="glass-card">
+
+        <div class="header-section">
+
+            <h1>AI Salary Predictor</h1>
+
+            <p>
+                Smart salary prediction powered by Machine Learning
+            </p>
+
+        </div>
+
+        <form action="/predict" method="POST">
+
+            <div class="skills-grid">
+
+                <!-- PYTHON -->
+                <label class="skill-card">
+
+                    <input type="checkbox"
+                           name="python"
+                           value="1"
+                           {% if values.python == '1' %}checked{% endif %}>
+
+                    <div class="card-content">
+
+                        <div class="icon">🐍</div>
+
+                        <h3>Python</h3>
+
+                    </div>
+
+                </label>
+
+                <!-- SQL -->
+                <label class="skill-card">
+
+                    <input type="checkbox"
+                           name="sql"
+                           value="1"
+                           {% if values.sql == '1' %}checked{% endif %}>
+
+                    <div class="card-content">
+
+                        <div class="icon">🗄️</div>
+
+                        <h3>SQL</h3>
+
+                    </div>
+
+                </label>
+
+                <!-- AWS -->
+                <label class="skill-card">
+
+                    <input type="checkbox"
+                           name="aws"
+                           value="1"
+                           {% if values.aws == '1' %}checked{% endif %}>
+
+                    <div class="card-content">
+
+                        <div class="icon">☁️</div>
+
+                        <h3>AWS</h3>
+
+                    </div>
+
+                </label>
+
+                <!-- EXCEL -->
+                <label class="skill-card">
+
+                    <input type="checkbox"
+                           name="excel"
+                           value="1"
+                           {% if values.excel == '1' %}checked{% endif %}>
+
+                    <div class="card-content">
+
+                        <div class="icon">📊</div>
+
+                        <h3>Excel</h3>
+
+                    </div>
+
+                </label>
+
+                <!-- TABLEAU -->
+                <label class="skill-card">
+
+                    <input type="checkbox"
+                           name="tableau"
+                           value="1"
+                           {% if values.tableau == '1' %}checked{% endif %}>
+
+                    <div class="card-content">
+
+                        <div class="icon">📈</div>
+
+                        <h3>Tableau</h3>
+
+                    </div>
+
+                </label>
+
+                <!-- POWER BI -->
+                <label class="skill-card">
+
+                    <input type="checkbox"
+                           name="powerbi"
+                           value="1"
+                           {% if values.powerbi == '1' %}checked{% endif %}>
+
+                    <div class="card-content">
+
+                        <div class="icon">📉</div>
+
+                        <h3>Power BI</h3>
+
+                    </div>
+
+                </label>
+
+                <!-- ML -->
+                <label class="skill-card">
+
+                    <input type="checkbox"
+                           name="ml"
+                           value="1"
+                           {% if values.ml == '1' %}checked{% endif %}>
+
+                    <div class="card-content">
+
+                        <div class="icon">🤖</div>
+
+                        <h3>Machine Learning</h3>
+
+                    </div>
+
+                </label>
+
+                <!-- DL -->
+                <label class="skill-card">
+
+                    <input type="checkbox"
+                           name="dl"
+                           value="1"
+                           {% if values.dl == '1' %}checked{% endif %}>
+
+                    <div class="card-content">
+
+                        <div class="icon">🧠</div>
+
+                        <h3>Deep Learning</h3>
+
+                    </div>
+
+                </label>
+
+                <!-- TensorFlow -->
+                <label class="skill-card">
+
+                    <input type="checkbox"
+                           name="tensorflow"
+                           value="1"
+                           {% if values.tensorflow == '1' %}checked{% endif %}>
+
+                    <div class="card-content">
+
+                        <div class="icon">🔥</div>
+
+                        <h3>TensorFlow</h3>
+
+                    </div>
+
+                </label>
+
+                <!-- Spark -->
+                <label class="skill-card">
+
+                    <input type="checkbox"
+                           name="spark"
+                           value="1"
+                           {% if values.spark == '1' %}checked{% endif %}>
+
+                    <div class="card-content">
+
+                        <div class="icon">⚡</div>
+
+                        <h3>Spark</h3>
+
+                    </div>
+
+                </label>
+
+                <!-- Hadoop -->
+                <label class="skill-card">
+
+                    <input type="checkbox"
+                           name="hadoop"
+                           value="1"
+                           {% if values.hadoop == '1' %}checked{% endif %}>
+
+                    <div class="card-content">
+
+                        <div class="icon">🛢️</div>
+
+                        <h3>Hadoop</h3>
+
+                    </div>
+
+                </label>
+
+                <!-- Statistics -->
+                <label class="skill-card">
+
+                    <input type="checkbox"
+                           name="statistics"
+                           value="1"
+                           {% if values.statistics == '1' %}checked{% endif %}>
+
+                    <div class="card-content">
+
+                        <div class="icon">📐</div>
+
+                        <h3>Statistics</h3>
+
+                    </div>
+
+                </label>
+
+            </div>
+
+            <button type="submit">
+                Predict Salary
+            </button>
+
+        </form>
+
+        {% if prediction_text %}
+        <div class="result-box">
+
+            {{ prediction_text }}
+
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>
