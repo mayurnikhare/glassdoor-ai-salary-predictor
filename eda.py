@@ -3,20 +3,29 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 
-# CREATE graphs folder
+# =========================================
+# CREATE GRAPHS FOLDER
+# =========================================
+
 os.makedirs("graphs", exist_ok=True)
 
+# =========================================
 # LOAD DATASET
+# =========================================
+
 df = pd.read_csv("data/glassdoor_jobs.csv")
 
 print("Dataset Loaded Successfully")
 
+# =========================================
 # REMOVE INVALID SALARY
+# =========================================
+
 df = df[df['Salary Estimate'] != '-1']
 
-# =====================================
+# =========================================
 # CLEAN SALARY COLUMN
-# =====================================
+# =========================================
 
 salary = df['Salary Estimate']
 
@@ -25,18 +34,17 @@ salary = salary.apply(
     .replace('$', '')
     .replace('K', '')
     .replace('Employer Provided Salary:', '')
-    .replace('Per Hour', '')
     .replace('Employer Provided Salary', '')
+    .replace('Per Hour', '')
 )
 
-# REMOVE EXTRA TEXT
 salary = salary.apply(
     lambda x: x.split('(')[0]
 )
 
-# =====================================
-# CREATE MIN/MAX SALARY
-# =====================================
+# =========================================
+# CREATE MIN/MAX/AVG SALARY
+# =========================================
 
 df['min_salary'] = salary.apply(
     lambda x: int(x.split('-')[0].strip())
@@ -46,26 +54,32 @@ df['max_salary'] = salary.apply(
     lambda x: int(x.split('-')[1].strip())
 )
 
-# AVERAGE SALARY
 df['avg_salary'] = (
     df['min_salary'] + df['max_salary']
 ) / 2
 
 print("Salary Cleaning Completed")
 
-# =====================================
+# =========================================
+# GRAPH STYLE
+# =========================================
+
+sns.set_style("darkgrid")
+
+# =========================================
 # 1. SALARY DISTRIBUTION
-# =====================================
+# =========================================
 
 plt.figure(figsize=(10,6))
 
 sns.histplot(
     df['avg_salary'],
     bins=30,
-    kde=True
+    kde=True,
+    color='blue'
 )
 
-plt.title("Salary Distribution")
+plt.title("Salary Distribution", fontsize=16)
 
 plt.xlabel("Average Salary")
 
@@ -75,15 +89,12 @@ plt.tight_layout()
 
 plt.savefig("graphs/salary_distribution.png")
 
-plt.close()
+plt.show()
 
-print("Salary Distribution Graph Saved")
-
-# =====================================
+# =========================================
 # 2. COMPANY SIZE VS SALARY
-# =====================================
+# =========================================
 
-# REMOVE MISSING SIZE
 company_df = df[df['Size'] != '-1']
 
 plt.figure(figsize=(14,6))
@@ -96,7 +107,10 @@ sns.barplot(
 
 plt.xticks(rotation=90)
 
-plt.title("Company Size vs Average Salary")
+plt.title(
+    "Company Size vs Average Salary",
+    fontsize=16
+)
 
 plt.xlabel("Company Size")
 
@@ -106,13 +120,11 @@ plt.tight_layout()
 
 plt.savefig("graphs/company_size_salary.png")
 
-plt.close()
+plt.show()
 
-print("Company Size Graph Saved")
-
-# =====================================
+# =========================================
 # 3. LOCATION VS SALARY
-# =====================================
+# =========================================
 
 location_df = df.groupby('Location')['avg_salary'] \
                 .mean() \
@@ -128,7 +140,10 @@ sns.barplot(
 
 plt.xticks(rotation=45)
 
-plt.title("Top 10 Locations by Average Salary")
+plt.title(
+    "Top 10 Locations by Average Salary",
+    fontsize=16
+)
 
 plt.xlabel("Location")
 
@@ -138,13 +153,11 @@ plt.tight_layout()
 
 plt.savefig("graphs/location_salary.png")
 
-plt.close()
+plt.show()
 
-print("Location Graph Saved")
-
-# =====================================
+# =========================================
 # 4. CORRELATION HEATMAP
-# =====================================
+# =========================================
 
 numeric_df = df.select_dtypes(include=['number'])
 
@@ -152,17 +165,20 @@ plt.figure(figsize=(12,8))
 
 sns.heatmap(
     numeric_df.corr(),
-    cmap='coolwarm'
+    cmap='coolwarm',
+    annot=True
 )
 
-plt.title("Correlation Heatmap")
+plt.title("Correlation Heatmap", fontsize=16)
 
 plt.tight_layout()
 
 plt.savefig("graphs/correlation_heatmap.png")
 
-plt.close()
+plt.show()
 
-print("Heatmap Saved")
+# =========================================
+# DONE
+# =========================================
 
 print("EDA COMPLETED SUCCESSFULLY")
